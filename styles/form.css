@@ -1,0 +1,35 @@
+input,
+textarea,
+select {
+    background-color: gainsboro;
+    padding: 10px 20px;
+    font-size: .9rem;
+    width: 100%;
+    border-radius: 6px;
+    box-shadow: 2px 2px 4px rgba(0, 2, 21, 0.425);
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    outline: none;
+}
+
+label{
+    font-weight: 600;
+    padding-top: 18px;
+    padding-left: 4px;
+    font-size: .9rem;
+}
+
+input:-webkit-autofill {
+    -webkit-box-shadow: 2px 2px 4px rgba(0, 2, 21, 0.425);
+    -webkit-text-fill-color: black;
+    transition: background-color 5000s ease-in-out 0s;
+}
+
+#non-document, #document {
+    box-shadow: none;
+    width: fit-content;
+    margin-right: 12px;
+}
