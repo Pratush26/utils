@@ -1,20 +1,19 @@
-// It is for the basic inforamation centralization. In a application this type of data used repeatatively in different place.
-
-// basic info
-export const companyName = "Reliable Paint SG";
-export const address = "14 Lorong 22 Geylang, Singapore 398672";
-export const contactNo = "+6598668485";
-export const contactStr = "+65 9866 8485";
-export const e_mail = "reliablepaintsg@gmail.com";
+export const companyName = "Diamond City Aircon Service";
+export const companyFullName = "Diamond City Aircon Service Pte Ltd";
+export const address = "513 Serangoon Rd, Singapore 218154";
+export const contactNo = "+6594687228";
+export const contactStr = "+65 9468 7228";
+export const e_mail = "diamondcityaircon@gmail.com";
 
 // social links
 export const fb_link = "https://www.facebook.com/";
 export const insta_link = "https://www.instagram.com/";
 export const tiktok_link = "https://www.tiktok.com/";
-export const linkdin_link = "https://www.linkedin.com/";
+export const linkdin_link = "https://www.linkedin.com/company/";
+export const youTube_link = "https://www.youtube.com/";
 export const discord_link = "https://discord.com/";
 export const x_link = "https://x.com/";
 export const git_link = "https://github.com/";
+export const website_url = "www.diamondcity.com";
 
-// map api string
-export const mapStr = "14+Lorong+22+Geylang,+Singapore+398672";
+export const mapStr = "513+Serangoon+Rd,+Singapore+218154";
