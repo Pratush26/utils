@@ -3,16 +3,16 @@ import { useState, useEffect, useCallback, useMemo } from "react";
 import { ChevronLeft, ChevronRight, X, Images } from "lucide-react";
 import Image from "next/image";
 
-export default function Portfolio({ images = [], col }: { images: string[], col: number }) {
+export default function Gallery({ images = [], col }: { images: string[], col: number }) {
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const [imgRatios, setImgRatios] = useState<number[]>([]);
   const [resolvedCols, setResolvedCols] = useState(2);
 
   useEffect(() => {
     function update() {
-      if (window.innerWidth < 640) setResolvedCols(1);
-      else if (window.innerWidth < 1024) setResolvedCols(2);
-      else setResolvedCols(col === 4 ? 4 : 3);
+      if (window.innerWidth < 640) setResolvedCols(2);
+      else if (window.innerWidth < 1024) setResolvedCols(4);
+      else setResolvedCols(col === 4 ? 4 : 6);
     }
     update();
     window.addEventListener("resize", update);
@@ -20,7 +20,7 @@ export default function Portfolio({ images = [], col }: { images: string[], col:
   }, [col]);
 
   useEffect(() => {
-    if (images.length === 0) return;
+    if (images.length === 0) return;  // ✅ guard INSIDE the hook, not before it
     const ratios = new Array(images.length).fill(1);
     let loaded = 0;
     images.forEach((src, i) => {
@@ -40,23 +40,18 @@ export default function Portfolio({ images = [], col }: { images: string[], col:
 
   const columns = useMemo(() => {
     const cols: number[][] = Array.from({ length: resolvedCols }, () => []);
-
     if (imgRatios.length !== images.length) {
       images.forEach((_, i) => cols[i % resolvedCols].push(i));
       return cols;
     }
-
     const colHeights = new Array(resolvedCols).fill(0);
     images.forEach((_, i) => {
       const shortest = colHeights.indexOf(Math.min(...colHeights));
       cols[shortest].push(i);
       colHeights[shortest] += imgRatios[i];
     });
-
     return cols;
   }, [imgRatios, images, resolvedCols]);
-
-  if (images.length === 0) return null;
 
   const closeModal = useCallback(() => setSelectedIndex(null), []);
   const prevImage = useCallback(
@@ -83,6 +78,9 @@ export default function Portfolio({ images = [], col }: { images: string[], col:
     document.body.style.overflow = selectedIndex !== null ? "hidden" : "";
     return () => { document.body.style.overflow = ""; };
   }, [selectedIndex]);
+
+  // ✅ Early return AFTER all hooks
+  if (images.length === 0) return null;
 
   return (
     <section className="py-10 sm:py-16 px-4 sm:px-8 md:px-20 bg-gray-950">
@@ -114,21 +112,30 @@ export default function Portfolio({ images = [], col }: { images: string[], col:
                   key={imgIdx}
                   onClick={() => setSelectedIndex(imgIdx)}
                   className="group relative w-full rounded-lg overflow-hidden bg-gray-800
-                             border border-white/5 hover:border-emerald-500/30
-                             focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500
-                             active:scale-[0.98] transition-all duration-200
-                             hover:scale-[1.02] hover:shadow-xl hover:shadow-black/40"
+             border border-white/5 hover:border-emerald-500/30
+             focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500
+             active:scale-[0.98] transition-all duration-200
+             hover:scale-[1.02] hover:shadow-xl hover:shadow-black/40"
                 >
-                  <Image
-                    src={images[imgIdx]}
-                    alt={`Portfolio project ${imgIdx + 1}`}
-                    className="w-full h-auto block transition-transform duration-500 group-hover:scale-105"
-                    loading="lazy"
-                  />
-                  {/* Hover/tap overlay */}
+                  {/* ✅ padding-bottom drives the height from the real aspect ratio */}
+                  <div
+                    className="relative w-full"
+                    style={{
+                      paddingBottom: `${(imgRatios[imgIdx] ?? 1) * 100}%`,
+                    }}
+                  >
+                    <Image
+                      src={images[imgIdx]}
+                      alt={`Portfolio project ${imgIdx + 1}`}
+                      fill
+                      className="object-cover transition-transform duration-500 group-hover:scale-105"
+                      loading="lazy"
+                    />
+                  </div>
+                  {/* overlay */}
                   <div className="absolute inset-0 bg-linear-to-t from-black/70 via-transparent to-transparent
-                                  opacity-0 group-hover:opacity-100 group-active:opacity-100
-                                  transition-opacity duration-200 flex items-end p-2 sm:p-3">
+                  opacity-0 group-hover:opacity-100 group-active:opacity-100
+                  transition-opacity duration-200 flex items-end p-2 sm:p-3">
                     <span className="text-[10px] sm:text-xs text-white/80 font-medium">
                       Photo {imgIdx + 1}
                     </span>
@@ -151,13 +158,12 @@ export default function Portfolio({ images = [], col }: { images: string[], col:
             onClick={(e) => e.stopPropagation()}
           >
             {/* Image */}
-            <div className="relative flex items-center justify-center w-full h-full
-                            px-12 py-16 sm:px-16 sm:py-12">
+            <div className="relative w-full h-full px-12 py-16 sm:px-16 sm:py-12">
               <Image
                 src={images[selectedIndex]}
                 alt={`Portfolio project ${selectedIndex + 1}`}
-                className="max-w-full max-h-full object-contain rounded"
-                style={{ maxHeight: "80vh" }}
+                fill
+                className="object-contain rounded"
               />
             </div>
 
