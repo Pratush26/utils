@@ -4,10 +4,13 @@ import { Phone } from "lucide-react";
 import { FaWhatsapp } from "react-icons/fa";
 import Image from "next/image";
 import { sendGTMEvent } from "@next/third-parties/google";
-import { companyName, contactNo, whatsAppUrl } from "@/lib/constants";
+import { companyName, contactNo, whatsAppNo } from "@/lib/constants";
 
 export default function FloatingButtons() {
   const [showPopup, setShowPopup] = useState(false);
+  const waUrl = `https://wa.me/${whatsAppNo}?text=${encodeURIComponent(
+    `Hello! I am interested in your services. Can you help me?`
+  )}`;
   return (
     <>
       {/* Floating Buttons */}

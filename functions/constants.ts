@@ -4,11 +4,9 @@ export const address = "example road, example city example country";
 export const contactNo = "+xxxxxxxxxxx";
 export const contactStr = "+xx xxxxx xxxx";
 export const e_mail = "example@gmail.com";
-// export const whatsAppNo = "+xxxxxxxxxxx";
+export const uen = "exampledfadf3";
+export const whatsAppNo = "+xxxxxxxxxxx";
 export const mainServiceName = "";
-export const whatsAppMessage = `Hello! I am interested in your ${mainServiceName? mainServiceName+" " : ""}services. Can you help me?`;
-export const whatsAppUrl = `https://wa.me/${contactNo}?text=${encodeURIComponent(whatsAppMessage)}`;
-
 // social links
 export const fb_link = "https://www.facebook.com/";
 export const insta_link = "https://www.instagram.com/";
