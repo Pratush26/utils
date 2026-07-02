@@ -11,8 +11,9 @@ export default function Gallery({ images = [], col }: { images: string[], col: n
   useEffect(() => {
     function update() {
       if (window.innerWidth < 640) setResolvedCols(2);
-      else if (window.innerWidth < 1024) setResolvedCols(4);
-      else setResolvedCols(col === 4 ? 4 : 6);
+      else if (window.innerWidth < 1024) setResolvedCols(3);
+      else if (window.innerWidth > 2000) setResolvedCols(6);
+      else setResolvedCols(col === 4 ? 4 : 5);
     }
     update();
     window.addEventListener("resize", update);
@@ -83,12 +84,12 @@ export default function Gallery({ images = [], col }: { images: string[], col: n
   if (images.length === 0) return null;
 
   return (
-    <section className="py-10 sm:py-16 px-4 sm:px-8 md:px-20 bg-gray-950">
-      <div className="max-w-6xl mx-auto">
+    <section className="py-10 sm:py-16 bg-gray-950">
+      <div className="w-11/12 2xl:w-10/12 mx-auto">
 
         {/* ── Header ── */}
         <div className="flex items-center gap-2.5 mb-3">
-          <div className="w-8 h-8 rounded-lg bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center">
+          <div className="w-8 h-8 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center">
             <Images className="w-4 h-4 text-white" />
           </div>
           <span className="text-xs font-semibold tracking-widest uppercase text-white">
@@ -112,8 +113,8 @@ export default function Gallery({ images = [], col }: { images: string[], col: n
                   key={imgIdx}
                   onClick={() => setSelectedIndex(imgIdx)}
                   className="group relative w-full rounded-lg overflow-hidden bg-gray-800
-             border border-white/5 hover:border-emerald-500/30
-             focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500
+             border border-white/5 hover:border-primary/30
+             focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary
              active:scale-[0.98] transition-all duration-200
              hover:scale-[1.02] hover:shadow-xl hover:shadow-black/40"
                 >
@@ -130,6 +131,7 @@ export default function Gallery({ images = [], col }: { images: string[], col: n
                       fill
                       className="object-cover transition-transform duration-500 group-hover:scale-105"
                       loading="lazy"
+                      sizes="(min-width: 1280px) 20vw, (min-width: 1024px) 25vw, (min-width: 768px) 33vw, 50vw"
                     />
                   </div>
                   {/* overlay */}
@@ -164,6 +166,7 @@ export default function Gallery({ images = [], col }: { images: string[], col: n
                 alt={`Portfolio project ${selectedIndex + 1}`}
                 fill
                 className="object-contain rounded"
+                sizes="100vw"
               />
             </div>
 
@@ -214,8 +217,8 @@ export default function Gallery({ images = [], col }: { images: string[], col: n
                   onClick={() => setSelectedIndex(i)}
                   className={`rounded-full transition-all duration-200 shrink-0
                     ${i === selectedIndex
-                      ? "w-5 h-1.5 bg-emerald-400"
-                      : "w-1.5 h-1.5 bg-white/20 hover:bg-white/40"
+                      ? "w-5 h-1.5 bg-primary"
+                      : "w-1.5 h-1.5 bg-white/30 hover:bg-white/50"
                     }`}
                 />
               ))}
