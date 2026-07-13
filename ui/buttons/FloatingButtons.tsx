@@ -8,7 +8,7 @@ import { companyName, contactNo, whatsAppNo } from "@/lib/constants";
 
 export default function FloatingButtons() {
   const [showPopup, setShowPopup] = useState(false);
-  const waUrl = `https://wa.me/${whatsAppNo}?text=${encodeURIComponent(
+  const waUrl = `https://wa.me/${whatsAppNo ?? contactNo}?text=${encodeURIComponent(
     `Hello! I am interested in your services. Can you help me?`
   )}`;
   return (
@@ -94,7 +94,7 @@ export default function FloatingButtons() {
             </p>
             <div className="bg-white p-4 flex justify-center items-center w-full rounded-b-lg">
               <a
-                href={whatsAppUrl}
+                href={waUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center justify-center gap-2 w-full bg-green-600 text-white px-4 py-2 rounded-md shadow hover:bg-green-700 transition"
@@ -104,7 +104,7 @@ export default function FloatingButtons() {
                     value: "whatsapp_contact",
                     click_id: "whatsapp_popup_button",
                     click_text: "WhatsApp Us",
-                    click_url: whatsAppUrl,
+                    click_url: waUrl,
                   })
                 }
               >
