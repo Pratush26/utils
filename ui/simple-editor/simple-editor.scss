@@ -1,0 +1,88 @@
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
+
+body {
+  --tt-toolbar-height: 44px;
+  --tt-theme-text: var(--tt-gray-light-900);
+
+  .dark & {
+    --tt-theme-text: var(--tt-gray-dark-900);
+  }
+}
+
+body {
+  font-family: "Inter", sans-serif;
+  color: var(--tt-theme-text);
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  padding: 0;
+  overscroll-behavior-y: none;
+}
+
+html,
+body {
+  overscroll-behavior-x: none;
+}
+
+html,
+body,
+#root,
+#app {
+  height: 100%;
+  background-color: var(--tt-bg-color);
+}
+
+::-webkit-scrollbar {
+  width: 0.25rem;
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--tt-scrollbar-color) transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--tt-scrollbar-color);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.tiptap.ProseMirror {
+  font-family: "DM Sans", sans-serif;
+}
+
+/* Was width:100vw / height:100vh — fine for a standalone page, wrong inside
+   a card in a form column. Now it just fills its parent. */
+.simple-editor-wrapper {
+  width: 100%;
+  height: auto;
+}
+
+/* Dropped the 648px cap and the height:100%/flex:1 stretch — those were what
+   forced the box to always be viewport-tall regardless of how much was typed. */
+.simple-editor-content {
+  width: 100%;
+  max-width: 100%;
+}
+
+/* Side padding cut from 3rem to 1rem, and the 30vh bottom padding (the main
+   cause of the oversized box) is gone. min-height keeps it from looking
+   collapsed when empty; max-height + scroll stops a very long post from
+   blowing out the rest of the form — it still grows with content up to that. */
+.simple-editor-content .tiptap.ProseMirror.simple-editor {
+  padding: 1rem;
+  min-height: 180px;
+  max-height: 65vh;
+  overflow-y: auto;
+}
+
+@media screen and (max-width: 480px) {
+  .simple-editor-content .tiptap.ProseMirror.simple-editor {
+    padding: 0.75rem;
+    min-height: 140px;
+    max-height: 55vh;
+  }
+}
